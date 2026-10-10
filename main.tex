@@ -1,0 +1,170 @@
+\documentclass{article}
+\usepackage{sty/Layout}
+\usepackage{sty/Commands}
+\usepackage{sty/Titlepage}
+\usepackage{siunitx}
+\sisetup{separate-uncertainty = true}
+\usepackage{multirow}
+\usepackage{marginnote}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{float}
+
+% ---- Link-Stil -------------------------------------------------------
+% Keine roten Kästen: farbiger Linktext, Querverweise im Text unterstrichen,
+% damit sie auch auf Papier gut zu erkennen sind.
+\definecolor{linkblue}{rgb}{0.10,0.35,0.65}
+\hypersetup{
+	colorlinks = true,
+	linkcolor  = linkblue,   % Inhaltsverzeichnis, \ref, \eqref, Abschnitts-/Gleichungslinks
+	citecolor  = linkblue,
+	urlcolor   = linkblue,
+	filecolor  = linkblue,
+	linktoc    = all,
+}
+\usepackage[most]{tcolorbox}
+\usepackage[normalem]{ulem}
+\let\OrigRef\ref
+\renewcommand{\ref}[1]{{\color{linkblue}\uline{\OrigRef{#1}}}}
+\renewcommand{\eqref}[1]{{\color{linkblue}\uline{\textup{(\OrigRef{#1})}}}}
+% -----------------------------------------------------------------------
+
+
+% ---- Ergebnisse aus Auswertung.ipynb (\erg{name}, \ergwert, \ergfehler, \ergsig) ----
+\input{export/ergebnisse}
+
+\begin{document}
+
+\makecoverpage{
+	pap             = 2,
+	experiment      = XX,
+	title           = {VERSUCHSTITEL},
+	group           = {},
+	tutor           = {},
+	dateexperiment  = {}
+}
+
+\pagestyle{fancy}
+
+\tableofcontents
+\clearpage
+
+\section{Einleitung}
+
+\subsection{Motivation}
+\label{sec:motivation}
+
+\vspace{1em}
+\begin{tcolorbox}[
+	colback  = linkblue!3,
+	colframe = linkblue!55,
+	boxrule  = 0.4pt,
+	arc      = 2pt,
+	left     = 6pt, right = 6pt, top = 5pt, bottom = 5pt,
+	fontupper = \small,
+	title    = {\scriptsize\textsf{\textbf{Nutzung von Generativer künstlicher Intelligenz}}},
+	coltitle = linkblue!80!black,
+	colbacktitle = linkblue!10,
+	fonttitle = \normalfont,
+]
+	\textbf{Werkzeuge:} Claude Sonnet 5, Opus 5 (Anthropic) \\
+	\textbf{Abschnitte:} Formulierungshilfen, Textgenerierung und Formatierungshilfen wurden teilweise in 
+	den Abschnitten \ref{sec:motivation}, \ref{sec:grundlagen}, \ref{sec:konstanten}, \ref{sec:aufbau} genutzt.
+	In den restlichen Abschnitten wurden die genannten Transformatoren nur für die Recherche zu technischen
+	Fragen über die Erstellung von Darstellungen in \LaTeX{} und Python-Bibliotheken genutzt.
+\end{tcolorbox}
+
+
+\subsection{Theoretische Grundlagen}
+\label{sec:grundlagen}
+
+\subsection{Versuchsaufbau}
+\label{sec:aufbau}
+
+\subsection{Verwendete Konstanten}
+\label{sec:konstanten}
+
+\begin{table}[H]
+	\centering
+	\caption{Verwendete Konstanten (\texttt{export/tabellen/konstanten.tex})}
+	\label{tab:konstanten}
+	\input{export/tabellen/konstanten}
+\end{table}
+
+\section{Messprotokoll}
+\label{sec:messprotokoll}
+
+
+\section{Auswertung}
+\label{sec:auswertung}
+
+% ======================================================================
+% BEISPIEL: so werden die Exporte aus Auswertung.ipynb eingebunden.
+% Reihenfolge je Teilrechnung: Beschreibung, Messtabelle, Formeln, Ergebnis.
+% Vor der Abgabe löschen.
+% ======================================================================
+\subsection{Beispiel: Beschleunigung des Vollzylinders}
+
+\subsubsection*{Laufzeit}
+Die Laufzeit wurde fünfmal gemessen (Tabelle~\ref{tab:zeiten-V}). Als Fehler des Mittelwerts
+verwenden wir $\Delta\bar t = \sqrt{S_M^2 + \Delta t_\text{Gerät}^2}$.
+
+\begin{table}[H]
+	\centering
+	\caption{Laufzeiten (\texttt{export/tabellen/zeiten\_V.tex})}
+	\label{tab:zeiten-V}
+	\input{export/tabellen/zeiten_V}
+\end{table}
+
+Damit ist $\bar t_1 = \erg{t_1}$.
+
+\subsubsection*{Theoretische Beschleunigung}
+Aus Rampenlänge $c$ und Projektion $l$ folgt die Neigung, daraus die theoretische Beschleunigung:
+\input{export/formeln/sin_phi}
+\input{export/formeln/a_th}
+Mit den Werten aus Tabelle~\ref{tab:konstanten} ergibt sich $\sin\varphi = \erg{sin_phi}$ und
+\begin{equation*}
+	a_\mathrm{th} = \erg{a_th}.
+\end{equation*}
+
+\begin{table}[H]
+	\centering
+	\caption{Fehlerbudget von $a_\mathrm{th}$ nach \eqref{eq:da_th} (\texttt{export/budget/a\_th.tex}, optional)}
+	\input{export/budget/a_th}
+\end{table}
+
+\subsubsection*{Beschleunigung aus dem Fit}
+\input{export/formeln/t2}
+\begin{table}[H]
+	\centering
+	\caption{Fit-Eingabe (\texttt{export/tabellen/fit\_V.tex})}
+	\label{tab:fit-V}
+	\input{export/tabellen/fit_V}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{export/diagramme/s_t2.png}
+	\caption{Strecke $s$ über $\bar t^{\,2}$ mit gewichteter Regression und Fehlergeraden}
+	\label{fig:s-t2}
+\end{figure}
+
+Die Regression liefert $m = \erg{fit_V_m}$ und $b = \erg{fit_V_b}$. Mit
+\input{export/formeln/a_V}
+folgt
+\begin{equation*}
+	\boxed{a_\mathrm{V} = \erg{a_V}}
+\end{equation*}
+Dieser Wert weicht um \ergsig{a_V_th}\,$\sigma$ von $a_\mathrm{th}$ ab.
+% ======================================================================
+
+
+\section{Diskussion}
+\label{sec:diskussion}
+
+
+\section{Anhang}
+\label{sec:anhang}
+
+
+\end{document}

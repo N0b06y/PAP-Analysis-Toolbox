@@ -1,0 +1,45 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{sty/Layout}[2026/10/08 PAP Layout]
+
+% Sprache: \usepackage{sty/Layout} = deutsch, \usepackage[english]{sty/Layout} = englisch
+\newif\if@pap@englisch
+\DeclareOption{english}{\@pap@englischtrue}
+\ProcessOptions\relax
+\newcommand{\cp@t}[2]{\if@pap@englisch #2\else #1\fi}   % Text je nach Sprache
+
+\RequirePackage[
+a4paper,left=24mm,right=24mm,top=30mm,bottom=25mm,
+headheight= 15mm,]{geometry} % Seitenlayout
+
+\RequirePackage[utf8]{inputenc}	% Eingabe
+\RequirePackage[T1]{fontenc}	% Ausgabe
+\if@pap@englisch
+	\RequirePackage[english]{babel}
+\else
+	\RequirePackage[ngerman]{babel}
+\fi
+\RequirePackage{fancyhdr}	% Kopfzeile
+\RequirePackage{hyperref}	% Hyperlinks
+\RequirePackage{graphicx}
+\RequirePackage{diagbox}
+
+% Absatzformatierung
+\RequirePackage{parskip}
+\setlength{\parindent}{0mm}
+
+% Kopf- und Fußzeile
+% Die Werte (PAP, Versuch, Gruppe, Autor, Partner) kommen aus \makecoverpage (sty/Titlepage.sty),
+% damit sie nicht mehr von Hand angepasst werden müssen.
+\renewcommand{\headrulewidth}{0.2mm}
+
+\fancyhead[L]{
+\textsf{\textbf{\cp@t{Physikalisches Anfängerpraktikum}{Introductory Physics Lab Course} \cp@pap}} \\
+\cp@t{Protokoll}{Report}\\
+\cp@t{Versuch}{Experiment}: \cp@experiment
+}
+
+\fancyhead[R]{
+\cp@t{Gruppe}{Group} \cp@group\\
+\cp@author \\
+Partner: \cp@partner
+}

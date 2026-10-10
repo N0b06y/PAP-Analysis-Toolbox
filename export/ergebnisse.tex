@@ -1,0 +1,48 @@
+% Automatisch erzeugt von Auswertung.ipynb -- nicht von Hand ändern.
+% Einbinden in der Präambel:  \input{export/ergebnisse}
+\makeatletter
+\providecommand{\erg@hole}[2]{\@ifundefined{#1@#2}{\PackageError{ergebnisse}{'\detokenize{#2}' fehlt in export/ergebnisse.tex}{Namen pruefen oder Export im Notebook ausfuehren.}}{\@nameuse{#1@#2}}}
+\providecommand{\erg}[1]{\erg@hole{erg}{#1}}
+\providecommand{\ergwert}[1]{\erg@hole{ergwert}{#1}}
+\providecommand{\ergfehler}[1]{\erg@hole{ergfehler}{#1}}
+\providecommand{\ergsig}[1]{\erg@hole{ergsig}{#1}}
+
+% c: MP S. 2
+\@namedef{erg@c}{\qty{100.00 \pm 0.10}{cm}}
+\@namedef{ergwert@c}{\num{100.00}}
+\@namedef{ergfehler@c}{\num{0.10}}
+% l: MP S. 2
+\@namedef{erg@l}{\qty{99.00 \pm 0.10}{cm}}
+\@namedef{ergwert@l}{\num{99.00}}
+\@namedef{ergfehler@l}{\num{0.10}}
+% g_HD: Anleitung S. 21
+\@namedef{erg@g_HD}{\qty{9.809840 \pm 0.000020}{m/s^2}}
+\@namedef{ergwert@g_HD}{\num{9.809840}}
+\@namedef{ergfehler@g_HD}{\num{0.000020}}
+% t_1: Mittelwert, N = 5
+\@namedef{erg@t_1}{\qty{1489.2 \pm 1.8}{ms}}
+\@namedef{ergwert@t_1}{\num{1489.2}}
+\@namedef{ergfehler@t_1}{\num{1.8}}
+% sin_phi: gauss: sqrt(1 - (l/c)**2)
+\@namedef{erg@sin_phi}{\num{0.141 \pm 0.010}}
+\@namedef{ergwert@sin_phi}{\num{0.141}}
+\@namedef{ergfehler@sin_phi}{\num{0.010}}
+% a_th: gauss: 2/3 * g * sin_phi
+\@namedef{erg@a_th}{\qty{0.92 \pm 0.07}{m/s^2}}
+\@namedef{ergwert@a_th}{\num{0.92}}
+\@namedef{ergfehler@a_th}{\num{0.07}}
+% fit_V_m: gewichtete Regression
+\@namedef{erg@fit_V_m}{\qty{0.4665 \pm 0.0022}{m/s^2}}
+\@namedef{ergwert@fit_V_m}{\num{0.4665}}
+\@namedef{ergfehler@fit_V_m}{\num{0.0022}}
+% fit_V_b: gewichtete Regression
+\@namedef{erg@fit_V_b}{\qty{-0.0050 \pm 0.0019}{m}}
+\@namedef{ergwert@fit_V_b}{\num{-0.0050}}
+\@namedef{ergfehler@fit_V_b}{\num{0.0019}}
+% a_V: gauss: 2*m
+\@namedef{erg@a_V}{\qty{0.933 \pm 0.005}{m/s^2}}
+\@namedef{ergwert@a_V}{\num{0.933}}
+\@namedef{ergfehler@a_V}{\num{0.005}}
+% a_V_th: sigma-Abweichung
+\@namedef{ergsig@a_V_th}{\num{0.2}}
+\makeatother
